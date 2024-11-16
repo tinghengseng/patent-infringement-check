@@ -7,7 +7,7 @@ Open terminal, and enter this command
 `git clone https://github.com/tinghengseng/patent-infringement-check.git`
 
 ## Step 2: Set up the OpenAI API Key
-Create `.env` file inside the backend directory of the project and add the following text, then replace the your_openai_api_key to your own.
+Create `.env` file inside the root directory of the project and add the following text, then replace the your_openai_api_key to your own.
 
 `OPENAI_API_KEY=your_openai_api_key`
 
