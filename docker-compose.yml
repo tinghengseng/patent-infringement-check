@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5001:5001"
+    environment:
+      # - FLASK_ENV=development
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - app-network  # Connects to a shared network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    networks:
+      - app-network  # Connects to a shared network
+
+networks:
+  app-network:
+    driver: bridge  # Use a bridge network for communication between containers
