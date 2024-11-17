@@ -52,7 +52,6 @@ The Patent Infringement Checker Application is a dockerized web application that
 #### Basic Operations
 1. Start the application
 2. Access the frontend interface
-3. [Add specific steps for using the application's features]
 
 ### API Documentation
 
