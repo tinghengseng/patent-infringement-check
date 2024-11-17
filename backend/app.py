@@ -25,7 +25,7 @@ with open(COMPANY_PRODUCTS_FILE, 'r') as f:
     companyProducts = json.load(f)
 
 
-#client = OpenAI()  # This will use the api key from environment variable
+# This will use the api key from environment variable
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 @app.route('/check', methods=['POST'])
@@ -35,15 +35,11 @@ def check_infringement():
     patent_id = data.get('patentID')
     company_name = data.get('companyName')
 
-    print(patent_id)
-
     # Find the patent
     patent = next((p for p in patents if p['publication_number'] == patent_id), None)
     if not patent:
         message = f"Patent ID {patent_id} not found"
         return jsonify(message)
-
-    print(patent['publication_number'] + " is found")
 
     # Find the company
     company = next((c for c in companyProducts['companies'] if company_name.lower() in c['name'].lower()), None)
@@ -51,12 +47,9 @@ def check_infringement():
         message = f"Company {company_name} not found"
         return jsonify(message)
 
-    print(company['name']  + " is found")
-
     # Compare products with the patent description
     results = []
     for product in company['products']:
-        print(product['name'] + "  "+ product['description'])
         prompt = (
             f"The following is a patent claims: {patent['claims']}.\n\n"
             f"The following is the product description: {product['description']}.\n\n"
@@ -75,10 +68,6 @@ def check_infringement():
         )
         # Extract the model's response and check if it indicates infringement
         reason = response.choices[0].message.content.strip().lower()
-        # results.append({
-        #     "product": product['name'],
-        #     "reason": reason
-        # })
         if "yes" in reason:  # The model indicates infringement
             results.append({
                 "product": product['name'],
@@ -89,13 +78,8 @@ def check_infringement():
     sorted_results = sorted(results, key=lambda x: len(x['reason']), reverse=True)[:2]
     if len(sorted_results) == 0:
         return jsonify([{"product": "No matches found", "reason": "None of the company's products appear to infringe on this patent."}])
-    print(sorted_results)
     return jsonify(sorted_results)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5001, debug=True)
     # app.run(debug=True)
-    
-# if __name__ == '__main__':
-#     with app.app_context():
-#         check_infringement()

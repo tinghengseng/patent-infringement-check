@@ -15,6 +15,12 @@ const App = () => {
 
   const handleCheckSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!patentID.trim() || !companyName.trim()) {
+      alert("Please enter both Patent ID and Company Name");
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await axios.post(
