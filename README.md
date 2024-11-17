@@ -16,6 +16,8 @@ First, please make sure there is docker on your machine, if you are not sure, ki
 
 `docker --version`
 
+Then, please make sure the Docker Desktop is running on your machine.
+
 If there is no docker installed, kindly go to https://www.docker.com/products/docker-desktop/ to download.
 
 If the docker is already installed, enter this command
